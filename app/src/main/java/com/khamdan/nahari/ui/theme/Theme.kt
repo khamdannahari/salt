@@ -11,7 +11,7 @@ private val DarkColorPalette = darkColors(
 )
 
 @Composable
-fun ReqresTheme(content: @Composable () -> Unit) {
+fun MainTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colors = DarkColorPalette,
         typography = Typography,

@@ -13,12 +13,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.khamdan.nahari.R
-import com.khamdan.nahari.data.response.User
+import com.khamdan.nahari.domain.Schedule
 
 @Composable
 fun HomeScreen(
@@ -26,12 +27,12 @@ fun HomeScreen(
 ) {
     val viewState by viewModel.state.collectAsState()
     Surface(Modifier.fillMaxSize()) {
-        UserRow(portfolios = viewState.users)
+        ScheduleRow(portfolios = viewState.schedules)
     }
 }
 
 @Composable
-fun UserRow(portfolios: List<User>) {
+fun ScheduleRow(portfolios: List<Schedule>) {
     Column {
         Text(
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
@@ -43,8 +44,8 @@ fun UserRow(portfolios: List<User>) {
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(start = 24.dp, top = 8.dp, end = 24.dp, bottom = 8.dp)
         ) {
-            itemsIndexed(portfolios) { index: Int, portfolio: User ->
-                UserItem(portfolio = portfolio)
+            itemsIndexed(portfolios) { index: Int, schedule: Schedule ->
+                ScheduleItem(schedule = schedule)
                 if (index < lastIndex) Spacer(modifier = Modifier.width(24.dp))
             }
         }
@@ -52,23 +53,24 @@ fun UserRow(portfolios: List<User>) {
 }
 
 @Composable
-fun UserItem(portfolio: User) {
+fun ScheduleItem(schedule: Schedule) {
     Column(
         Modifier
             .fillMaxWidth()
             .padding(top = 16.dp)
     ) {
         AsyncImage(
-            model = portfolio.avatar,
+            model = schedule.image,
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(128.dp)
                 .clip(RoundedCornerShape(24.dp)),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            error = painterResource(R.drawable.ic_launcher_background)
         )
         Text(
-            text = portfolio.first_name.plus(" ").plus(portfolio.last_name),
+            text = schedule.name,
             style = MaterialTheme.typography.body1,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
@@ -77,7 +79,16 @@ fun UserItem(portfolio: User) {
                 .fillMaxWidth()
         )
         Text(
-            text = portfolio.email,
+            text = schedule.status,
+            style = MaterialTheme.typography.body2,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                .padding(top = 2.dp)
+                .fillMaxWidth()
+        )
+        Text(
+            text = schedule.rating.toString(),
             style = MaterialTheme.typography.body2,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,

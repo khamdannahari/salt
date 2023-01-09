@@ -1,9 +1,8 @@
 package com.khamdan.nahari.di
 
 import android.util.Log
-import com.khamdan.nahari.data.repository.ReqresRepositoryImpl
+import com.khamdan.nahari.data.repository.ScheduleRepositoryImpl
 import com.khamdan.nahari.data.service.ApiService
-import com.khamdan.nahari.ui.login.LoginViewModel
 import com.khamdan.nahari.ui.home.HomeViewModel
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
@@ -19,12 +18,11 @@ import org.koin.dsl.module
 import io.ktor.client.engine.android.Android as Android
 
 val viewModelModule = module {
-    viewModel { LoginViewModel(get()) }
     viewModel { HomeViewModel(get()) }
 }
 
 val repositoryModule = module {
-    single { ReqresRepositoryImpl(get()) }
+    single { ScheduleRepositoryImpl(get()) }
 }
 
 val apiServiceModule = module {

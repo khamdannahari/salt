@@ -1,16 +1,13 @@
 package com.khamdan.nahari.data.service
 
-import com.khamdan.nahari.data.response.Login
-import com.khamdan.nahari.data.response.Users
+import com.khamdan.nahari.data.response.ScheduleResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
 
 class ApiService(private val httpClient: HttpClient) {
 
-    suspend fun getUsers(): Users = httpClient.get(GET_USERS)
-
-    suspend fun login(email: String, password: String): Login = httpClient.get(LOGIN) {
-        parameter("email", email)
-        parameter("password", password)
+    suspend fun getUsers(): List<ScheduleResponse> = httpClient.get(GET_SCHEDULES) {
+        parameter("date", "2020-05-29")
+        parameter("country", "US")
     }
 }
