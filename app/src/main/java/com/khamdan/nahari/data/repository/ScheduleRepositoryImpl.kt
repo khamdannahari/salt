@@ -10,7 +10,7 @@ class ScheduleRepositoryImpl(private val apiService: ApiService) : ScheduleRepos
 
     override suspend fun getSchedules(): Response<List<Schedule>> {
         return try {
-            val getUsers = apiService.getUsers().map { it.toScheduleModel() }
+            val getUsers = apiService.getSchedules().map { it.toScheduleModel() }
             Response.Success(getUsers)
         } catch (e: ClientRequestException) {
             // 4xx

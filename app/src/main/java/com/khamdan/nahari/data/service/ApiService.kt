@@ -6,8 +6,13 @@ import io.ktor.client.request.*
 
 class ApiService(private val httpClient: HttpClient) {
 
-    suspend fun getUsers(): List<ScheduleResponse> = httpClient.get(GET_SCHEDULES) {
+    suspend fun getSchedules(): List<ScheduleResponse> = httpClient.get(GET_SCHEDULES) {
         parameter("date", "2020-05-29")
         parameter("country", "US")
+    }
+
+    private companion object {
+        const val BASE_URL = "https://api.tvmaze.com/"
+        const val GET_SCHEDULES = "$BASE_URL/schedule/web"
     }
 }
